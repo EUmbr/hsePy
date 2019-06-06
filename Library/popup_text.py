@@ -1,19 +1,24 @@
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
+from parametres import popup_size1, popup_font1, popup_font2
+from parametres import popup_text_warning1, popup_text_warning2
+from parametres import popup_text_warning_mat, popup_text_warning_rus
+from parametres import popup_text_warning_dop
 
 
 class PopupWindowGet1_1():
     def __init__(self):
         self.top = tk.Toplevel()
-        self.top.geometry('300x400+550+200')
+        self.top.geometry(popup_size1+'+550+200')
         self.top.resizable(0, 0)
+        self.top.title('Текстовый отчет')
 
         self.f1 = ttk.Frame(self.top)
         self.f1.pack(expand=1, fill='both')
 
         ttk.Label(self.f1, text='Выберите отображаемые\nстолбцы:',
-                  font=('Helvetica', 16)).pack(side='top', pady=10)
+                  font=popup_font1).pack(side='top', pady=8)
 
         self.SurVar = tk.IntVar()
         self.NameVar = tk.IntVar()
@@ -22,33 +27,37 @@ class PopupWindowGet1_1():
         self.DopexVar = tk.IntVar()
         self.DopemarkVar = tk.IntVar()
         self.CityVar = tk.IntVar()
+        self.RegionVar = tk.IntVar()
 
         f2 = ttk.Frame(self.f1)
         f2.pack(side='top', fill='both')
 
         self.C1 = tk.Checkbutton(f2, text="Фамилия",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.SurVar, onvalue=1, offvalue=0)
         self.C2 = tk.Checkbutton(f2, text="Имя",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.NameVar, onvalue=1, offvalue=0)
         self.C3 = tk.Checkbutton(f2,
                                  text="Математика",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.MatVar, onvalue=1, offvalue=0)
         self.C4 = tk.Checkbutton(f2, text="Русский язык",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.RusVar, onvalue=1, offvalue=0)
         self.C5 = tk.Checkbutton(f2, text="Доп. предмет",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.DopexVar, onvalue=1, offvalue=0)
         self.C6 = tk.Checkbutton(f2, text="Доп. баллы",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.DopemarkVar,
                                  onvalue=1, offvalue=0)
         self.C7 = tk.Checkbutton(f2, text="Город",
-                                 font=('Helvetica', 12),
+                                 font=popup_font2,
                                  variable=self.CityVar, onvalue=1, offvalue=0)
+        self.C8 = tk.Checkbutton(f2, text="Округ",
+                                 font=popup_font2,
+                                 variable=self.RegionVar, onvalue=1, offvalue=0)
 
         self.C1.grid(row=0, column=0, sticky='W', padx=20, pady=5)
         self.C2.grid(row=1, column=0, sticky='W', padx=20, pady=5)
@@ -57,6 +66,7 @@ class PopupWindowGet1_1():
         self.C5.grid(row=4, column=0, sticky='W', padx=20, pady=5)
         self.C6.grid(row=5, column=0, sticky='W', padx=20, pady=5)
         self.C7.grid(row=6, column=0, sticky='W', padx=20, pady=5)
+        self.C8.grid(row=7, column=0, sticky='W', padx=20, pady=5)
 
         ttk.Button(self.f1, text='Далее', command=self.next).pack(pady=10)
 
@@ -76,6 +86,8 @@ class PopupWindowGet1_1():
             self.cols.append(self.C6['text'])
         if self.CityVar.get():
             self.cols.append(self.C7['text'])
+        if self.RegionVar.get():
+            self.cols.append(self.C8['text'])
 
         if self.cols:
 
@@ -85,73 +97,73 @@ class PopupWindowGet1_1():
             f3.pack(expand=1, fill='both')
 
             ttk.Label(f3, text='Выберите критерии',
-                      font=('Helvetica', 16)).pack(side='top', pady=25)
+                      font=popup_font2).pack(side='top', pady=25)
 
             f4 = ttk.Frame(f3)
             f4.pack(side='top', fill='both')
 
             ttk.Label(f4, text='Математика',
-                      font=('Helvetica', 12)).grid(row=0, column=0,
-                                                   columnspan=2, pady=10,
-                                                   padx=10, sticky='W')
+                      font=popup_font2).grid(row=0, column=0,
+                                             columnspan=2, pady=10,
+                                             padx=10, sticky='W')
             ttk.Label(f4, text='От',
-                      font=('Helvetica', 12)).grid(row=1, column=0,
-                                                   pady=10, padx=10,
-                                                   sticky='W')
+                      font=popup_font2).grid(row=1, column=0,
+                                             pady=10, padx=10,
+                                             sticky='W')
 
             self.w1 = ttk.Spinbox(f4, from_=20, to=100, width=5)
             self.w1.grid(row=1, column=1)
 
             ttk.Label(f4, text='до',
-                      font=('Helvetica', 12)).grid(row=1, column=3, pady=10,
-                                                   padx=10, sticky='W')
+                      font=popup_font2).grid(row=1, column=3, pady=10,
+                                             padx=10, sticky='W')
 
             self.w2 = ttk.Spinbox(f4, from_=20, to=100, width=5)
             self.w2.grid(row=1, column=4)
 
             ttk.Label(f4, text='Русский язык',
-                      font=('Helvetica', 12)).grid(row=2, column=0,
-                                                   columnspan=2, pady=10,
-                                                   padx=10, sticky='W')
+                      font=popup_font2).grid(row=2, column=0,
+                                             columnspan=2, pady=10,
+                                             padx=10, sticky='W')
             ttk.Label(f4, text='От',
-                      font=('Helvetica', 12)).grid(row=3, column=0,
-                                                   pady=10, padx=10,
-                                                   sticky='W')
+                      font=popup_font2).grid(row=3, column=0,
+                                             pady=10, padx=10,
+                                             sticky='W')
 
             self.w3 = ttk.Spinbox(f4, from_=20, to=100, width=5)
             self.w3.grid(row=3, column=1)
 
             ttk.Label(f4, text='до',
-                      font=('Helvetica', 12)).grid(row=3, column=3,
-                                                   pady=10, padx=10,
-                                                   sticky='W')
+                      font=popup_font2).grid(row=3, column=3,
+                                             pady=10, padx=10,
+                                             sticky='W')
 
             self.w4 = ttk.Spinbox(f4, from_=20, to=100, width=5)
             self.w4.grid(row=3, column=4)
 
             ttk.Label(f4, text='Доп. предмет',
-                      font=('Helvetica', 12)).grid(row=4, column=0,
-                                                   columnspan=2, pady=10,
-                                                   padx=10, sticky='W')
+                      font=popup_font2).grid(row=4, column=0,
+                                             columnspan=2, pady=10,
+                                             padx=10, sticky='W')
             ttk.Label(f4, text='От',
-                      font=('Helvetica', 12)).grid(row=5, column=0,
-                                                   pady=10, padx=10,
-                                                   sticky='W')
+                      font=popup_font2).grid(row=5, column=0,
+                                             pady=10, padx=10,
+                                             sticky='W')
 
             self.w5 = ttk.Spinbox(f4, from_=20, to=100, width=5)
             self.w5.grid(row=5, column=1)
 
             ttk.Label(f4, text='до',
-                      font=('Helvetica', 12)).grid(row=5, column=3,
-                                                   pady=10, padx=10,
-                                                   sticky='W')
+                      font=popup_font2).grid(row=5, column=3,
+                                             pady=10, padx=10,
+                                             sticky='W')
 
             self.w6 = ttk.Spinbox(f4, from_=20, to=100, width=5)
             self.w6.grid(row=5, column=4)
 
-            ttk.Button(f3, text='Создать', command=self.done).pack(pady=20)
+            ttk.Button(f3, text='Создать', command=self.done).pack(pady=35)
         else:
-            mb.showwarning('Warning', 'Выберите столбцы', parent=self.top)
+            mb.showwarning('Warning', popup_text_warning1, parent=self.top)
 
     def done(self):
         self.mat_max = self.rus_max = self.dop_max = -1
@@ -163,7 +175,7 @@ class PopupWindowGet1_1():
            (any(not(char.isdigit()) for char in self.w4.get()))or\
            (any(not(char.isdigit()) for char in self.w5.get()))or\
            (any(not(char.isdigit()) for char in self.w6.get())):
-            mb.showwarning('Warning', 'Данные должны включать только числа',
+            mb.showwarning('Warning', popup_text_warning2,
                            parent=self.top)
 
         else:
@@ -179,7 +191,7 @@ class PopupWindowGet1_1():
                 self.mat_max = 100
             else:
                 mb.showwarning('Warning',
-                               'Данные о математике введены неверно',
+                               popup_text_warning_mat,
                                parent=self.top)
                 self.mat_min = -1
                 self.mat_max = -1
@@ -195,7 +207,7 @@ class PopupWindowGet1_1():
                 self.rus_max = 100
             else:
                 mb.showwarning('Warning',
-                               'Данные о русском языке введены неверно',
+                               popup_text_warning_rus,
                                parent=self.top)
                 self.rus_min = -1
                 self.rus_max = -1
@@ -211,7 +223,7 @@ class PopupWindowGet1_1():
                 self.dop_max = 100
             else:
                 mb.showwarning('Warning',
-                               'Данные о доп. предмете введены неверно',
+                               popup_text_warning_dop,
                                parent=self.top)
                 self.dop_min = -1
                 self.dop_max = -1

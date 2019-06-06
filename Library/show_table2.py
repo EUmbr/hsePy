@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter.filedialog import asksaveasfilename
+from popup_filename import PopupFileName
+from parametres import path_text
 
 
 class ShowTable1():
@@ -38,7 +39,8 @@ class ShowTable1():
                    command=self.top.destroy).pack(pady=5)
 
     def save(self):
-        self.filename = asksaveasfilename(defaultextension=".xlsx",
-                                          filetypes=(("xlsx file", "*.xlsx"),
-                                                     ("All Files", "*.*")))
-        self.data.to_excel(self.filename, index=False)
+        item = PopupFileName()
+        self.top.wait_window(item.top)
+        path = path_text+item.filename+'.xlsx'
+
+        self.data.to_excel(path, index=True)

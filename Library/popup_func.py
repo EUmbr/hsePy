@@ -1,18 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
+from parametres import popup_getfunc_size, popup_font1
 
 
 class PopupWindowFuncChoose():
     def __init__(self):
         self.top = tk.Toplevel()
-        self.top.geometry('350x180+550+200')
+        self.top.geometry(popup_getfunc_size+'+550+200')
         self.top.resizable(0, 0)
+        self.top.title('Сводная таблица')
 
         frame1 = ttk.Frame(self.top)
         frame1.pack(expand=1, fill='both')
 
         ttk.Label(frame1, text='Выберите функцию агрегации:',
-                  font=('Helvetica', 16)).pack(side='top', pady=10)
+                  font=popup_font1).pack(side='top', pady=10)
 
         frame2 = ttk.Frame(frame1)
         frame2.pack(side='top', fill='both')

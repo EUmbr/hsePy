@@ -12,6 +12,13 @@ from popup_text2 import PopupWindowGet1_2
 from popup_add import PopupWindowAdd
 from popup_change import PopupWindowChange
 from popup_func import PopupWindowFuncChoose
+from parametres import path_graph, change_warning, save_warning, delete_warning
+
+
+fig_size = plt.rcParams["figure.figsize"]
+fig_size[0] = 12
+fig_size[1] = 9
+plt.rcParams["figure.figsize"] = fig_size
 
 
 class PageOne(tk.Frame):
@@ -22,67 +29,67 @@ class PageOne(tk.Frame):
         self.data = data
         self.save_flag = False
 
-        self.frm1 = ttk.Frame(self, width=580)
+        self.frm1 = ttk.Frame(self, width=695)
         self.frm1.pack(side='left', fill='y')
 
         self.frm2 = ttk.Frame(self, width=240)
         self.frm2.pack(side='right', fill='both')
 
         self.add_button = ttk.Button(self, text='Добавить сущность')
-        self.add_button.place(x=650, y=20, width=200, height=30)
+        self.add_button.place(x=765, y=20, width=200, height=30)
         self.add_button['command'] = self.add_item
 
         self.change_button = ttk.Button(self,
                                         text='Изменить выбранную сущность')
-        self.change_button.place(x=650, y=60, width=200, height=30)
+        self.change_button.place(x=765, y=60, width=200, height=30)
         self.change_button['command'] = self.change_item
 
         self.delete_button = ttk.Button(self,
                                         text='Удалить выбранную сущность')
-        self.delete_button.place(x=650, y=100, width=200, height=30)
+        self.delete_button.place(x=765, y=100, width=200, height=30)
         self.delete_button['command'] = self.delete_item
 
-        ttk.Label(self, text='Выбор текстового отчета').place(x=680, y=170)
+        ttk.Label(self, text='Выбор текстового отчета').place(x=795, y=170)
 
         self.combobox1 = ttk.Combobox(self, values=['Простой текстовый отчет',
                                                     'Статистический отчет',
                                                     'Сводная таблица'],
                                       state='readonly', width=30)
-        self.combobox1.place(x=650, y=190)
+        self.combobox1.place(x=765, y=190)
 
         self.combo_button1 = ttk.Button(self, text='Составить')
-        self.combo_button1.place(x=710, y=220)
+        self.combo_button1.place(x=825, y=220)
         self.combo_button1['command'] = self.get1
 
-        ttk.Label(self, text='Выбор графического отчета').place(x=675, y=280)
+        ttk.Label(self, text='Выбор графического отчета').place(x=790, y=280)
 
         self.combobox2 = ttk.Combobox(self, values=['Столбчатая диаграмма',
                                                     'Гистограмма',
                                                     'Диаграмма Бокса-Вискера',
                                                     'Диаграмма рассеивания'],
                                       state='readonly', width=30)
-        self.combobox2.place(x=650, y=300)
+        self.combobox2.place(x=765, y=300)
 
         self.combo_button2 = ttk.Button(self, text='Составить')
-        self.combo_button2.place(x=710, y=330)
+        self.combo_button2.place(x=825, y=330)
         self.combo_button2['command'] = self.get2
 
         self.combo_button3 = ttk.Button(self, text='Сохранить')
-        self.combo_button3.place(x=710, y=360)
+        self.combo_button3.place(x=825, y=360)
         self.combo_button3['command'] = self.save_graph
 
         self.save_button = ttk.Button(self, text='Сохранить')
-        self.save_button.place(x=650, y=450, width=200, height=30)
+        self.save_button.place(x=765, y=450, width=200, height=30)
         self.save_button['command'] = self.save_data
 
         self.back_button = ttk.Button(self, text='Назад')
-        self.back_button.place(x=650, y=410, width=200, height=30)
+        self.back_button.place(x=765, y=410, width=200, height=30)
         self.back_button['command'] = lambda: controller.show_frame('StartPage')
 
         self.table = ttk.Treeview(self.frm1, show="headings",
                                   selectmode="browse", height=25)
         self.table["columns"] = ('surname', 'name', 'mat_mark', 'rus_mark',
-                                 'dop_exam', 'dop_mark', 'city')
+                                 'dop_exam', 'dop_mark', 'city', 'region')
 
         self.table.column("surname", width=95)
         self.table.column("name", width=90)
@@ -91,6 +98,7 @@ class PageOne(tk.Frame):
         self.table.column("dop_exam", width=105)
         self.table.column("dop_mark", width=80, anchor=tk.CENTER)
         self.table.column("city", width=115)
+        self.table.column("region", width=115)
 
         self.table.heading("surname", text='Фамилия')
         self.table.heading("name", text='Имя')
@@ -99,6 +107,7 @@ class PageOne(tk.Frame):
         self.table.heading("dop_exam", text='Доп. предмет')
         self.table.heading("dop_mark", text='Доп. баллы')
         self.table.heading("city", text='Город')
+        self.table.heading("region", text='Округ')
 
         scrolltable = tk.Scrollbar(self.frm1, command=self.table.yview)
         self.table.configure(yscrollcommand=scrolltable.set)
@@ -183,18 +192,18 @@ class PageOne(tk.Frame):
     def graph1(self):
         fig = plt.figure()
         axes = fig.add_axes([0.1, 0.3, .6, .6])
-
-        cat = self.data["Город"].unique()
+        plt.title('Столбчатая диаграмма')
+        cat = self.data["Округ"].unique()
         grep = pd.DataFrame([])
         for c in cat:
-            cross = pd.crosstab(self.data.loc[self.data['Город'] == c,
+            cross = pd.crosstab(self.data.loc[self.data['Округ'] == c,
                                               'Доп. предмет'], c)
             grep = pd.merge(grep, cross, how='outer', left_index=True,
                             right_index=True)
         grep.T.plot(kind='bar', ax=axes)
         plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
         if self.save_flag:
-            plt.savefig('Graphics\\1.png')
+            plt.savefig(path_graph+'BarPlot.png')
             self.save_flag = False
         else:
             plt.show()
@@ -203,16 +212,17 @@ class PageOne(tk.Frame):
         self.data.hist('Доп. баллы', by='Доп. предмет', bins=10)
         plt.tight_layout()
         if self.save_flag:
-            plt.savefig('Graphics\\2.png')
+            plt.savefig(path_graph+'Histogram.png')
             self.save_flag = False
         else:
             plt.show()
 
     def graph3(self):
         self.data.boxplot('Доп. баллы', by='Доп. предмет')
+        plt.title('')
         plt.tight_layout()
         if self.save_flag:
-            plt.savefig('Graphics\\3.png')
+            plt.savefig(path_graph+'BoxPlot.png')
             self.save_flag = False
         else:
             plt.show()
@@ -220,26 +230,25 @@ class PageOne(tk.Frame):
     def graph4(self):
         xmin, xmax = 0, 100
         ymin, ymax = 0, 100
-        fig, ax_lst = plt.subplots(3, 5)
-        print(ax_lst[0])
+        fig, ax_lst = plt.subplots(2, 3)
         fig.subplots_adjust(.1, .1, .8, .8, wspace=1, hspace=.5)
         fig.suptitle('Анализ связи баллов по матемтике и'
                      ' по русскому языку по городам')
         i = 0
-        for val in list(self.data['Город'].unique()):
+        for val in list(self.data['Округ'].unique()):
             print(val)
-            x = self.data.loc[self.data['Город'] == val, 'Русский язык']
-            y = self.data.loc[self.data['Город'] == val, 'Математика']
-            ax_lst[i//5][i % 5].set_xlim(left=xmin, right=xmax)
-            ax_lst[i//5][i % 5].set_ylim(bottom=ymin, top=ymax)
-            ax_lst[i//5][i % 5].scatter(x, y)
-            ax_lst[i//5][i % 5].set_title(val)
-            ax_lst[i//5][i % 5].set_xlabel("Русский язык")
-            ax_lst[i//5][i % 5].set_ylabel("Математика")
+            x = self.data.loc[self.data['Округ'] == val, 'Русский язык']
+            y = self.data.loc[self.data['Округ'] == val, 'Математика']
+            ax_lst[i//3][i % 3].set_xlim(left=xmin, right=xmax)
+            ax_lst[i//3][i % 3].set_ylim(bottom=ymin, top=ymax)
+            ax_lst[i//3][i % 3].scatter(x, y)
+            ax_lst[i//3][i % 3].set_title(val)
+            ax_lst[i//3][i % 3].set_xlabel("Русский язык")
+            ax_lst[i//3][i % 3].set_ylabel("Математика")
             i += 1
 
         if self.save_flag:
-            plt.savefig('Graphics\\4.png')
+            plt.savefig(path_graph+'ScatterPlot.png')
             self.save_flag = False
         else:
             plt.show()
@@ -255,7 +264,7 @@ class PageOne(tk.Frame):
             print(self.data)
         else:
             mb.showwarning("Warning",
-                           "Выберите сущность, которую вы хотите удалить!")
+                           delete_warning)
 
     def add_item(self):
         item = PopupWindowAdd()
@@ -264,14 +273,16 @@ class PageOne(tk.Frame):
         self.table.insert('', 'end', values=(item.surname, item.name,
                                              int(item.mat), int(item.rus),
                                              item.dopex,
-                                             int(item.dopmark), item.city))
+                                             int(item.dopmark), item.city,
+                                             item.region))
         self.data = self.data.append({'Фамилия': item.surname,
                                       'Имя': item.name,
                                       'Математика': int(item.mat),
                                       'Русский язык': int(item.rus),
                                       'Доп. предмет': item.dopex,
                                       'Доп. баллы': int(item.dopmark),
-                                      'Город': item.city},
+                                      'Город': item.city,
+                                      'Округ': item.region},
                                      ignore_index=True)
         print(self.data)
 
@@ -285,35 +296,32 @@ class PageOne(tk.Frame):
             pos = self.table.index(iid)
             print(pos)
 
-            self.data.iloc[pos]['Фамилия'] = item.surname
-            self.data.iloc[pos]['Имя'] = item.name
-            self.data.iloc[pos]['Математика'] = int(item.mat)
-            self.data.iloc[pos]['Русский язык'] = int(item.rus)
-            self.data.iloc[pos]['Доп. предмет'] = item.dopex
-            self.data.iloc[pos]['Доп. баллы'] = int(item.dopmark)
-            self.data.iloc[pos]['Город'] = item.city
+            self.data.loc[pos, 'Фамилия'] = item.surname
+            self.data.loc[pos, 'Имя'] = item.name
+            self.data.loc[pos, 'Математика'] = int(item.mat)
+            self.data.loc[pos, 'Русский язык'] = int(item.rus)
+            self.data.loc[pos, 'Доп. предмет'] = item.dopex
+            self.data.loc[pos, 'Доп. баллы'] = int(item.dopmark)
+            self.data.loc[pos, 'Город'] = item.city
+            self.data.loc[pos, 'Округ'] = item.region
+
+            print(self.data.iloc[pos])
 
             self.table.insert('', pos, values=(item.surname, item.name,
                                                int(item.mat), int(item.rus),
                                                item.dopex, int(item.dopmark),
-                                               item.city))
+                                               item.city, item.region))
             self.table.delete(iid)
         else:
             mb.showwarning("Warning",
-                           "Выберите сущность, которую вы хотите изменить!")
+                           change_warning)
 
     def save_data(self):
         if self.table.get_children():
-            keys = ['Фамилия', 'Имя', 'Математика', 'Русский язык',
-                    'Доп. предмет', 'Доп. баллы', 'Город']
-            data = {}
-            for iid in self.table.get_children():
-                values = self.table.item(iid)['values']
-                data[values[0]] = dict(zip(keys, values))
             file_name = asksaveasfilename()
             file_name = str(file_name)
             file = open(file_name, 'wb')
-            pk.dump(data, file)
+            pk.dump(self.data, file)
             file.close()
         else:
-            mb.showwarning('Warning', 'Таблица пуста!')
+            mb.showwarning('Warning', save_warning)
