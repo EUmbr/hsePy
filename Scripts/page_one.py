@@ -1,3 +1,7 @@
+"""
+Модуль для создания окна с базой данных, текстовыми и графическими отчетами
+Авторы: Умбрас Е., Зайцев С., Ушаков В., Попов Н. БИВ182
+"""
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
@@ -5,23 +9,27 @@ from tkinter.filedialog import asksaveasfilename
 import pickle as pk
 import pandas as pd
 import matplotlib.pyplot as plt
-from popup_text import PopupWindowGet1_1
+from popup_text import PopupWindowGet1
 from library import ShowTable
 from library import ShowTable1
-from popup_text2 import PopupWindowGet1_2
+from popup_text2 import PopupWindowGet2
 from popup_add import PopupWindowAdd
 from popup_change import PopupWindowChange
 from popup_func import PopupWindowFuncChoose
 from parametres import path_graph, change_warning, save_warning, delete_warning
 
 
-fig_size = plt.rcParams["figure.figsize"]
-fig_size[0] = 12
-fig_size[1] = 9
-plt.rcParams["figure.figsize"] = fig_size
+FIG_SIZE = plt.rcParams["figure.figsize"]
+FIG_SIZE[0] = 12
+FIG_SIZE[1] = 9
+plt.rcParams["figure.figsize"] = FIG_SIZE
 
 
 class PageOne(tk.Frame):
+    """
+    Класс для создания окна с базой данных, текстовыми и графическими отчетами
+    Авторы: Умбрас Е., Зайцев С., Ушаков В., Попов Н. БИВ182
+    """
     def __init__(self, parent, controller, data=None):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
@@ -114,6 +122,10 @@ class PageOne(tk.Frame):
         self.table.pack(fill=tk.BOTH)
 
     def save_graph(self):
+        """
+        Функция для сохранения графиков
+        Автор: Ушаков В. БИВ182
+        """
         self.save_flag = True
         combo_value = self.combobox2.get()
         if combo_value == '':
@@ -132,11 +144,15 @@ class PageOne(tk.Frame):
             plt.close()
 
     def get1(self):
+        """
+        Функция для получения вида выбранного отчета
+        Автор: Умбрас Е. БИВ182
+        """
         combo_value = self.combobox1.get()
         if combo_value == '':
             mb.showwarning('Warning', 'Выберите вид отчета')
         elif combo_value == 'Простой текстовый отчет':
-            item = PopupWindowGet1_1()
+            item = PopupWindowGet1()
             self.master.wait_window(item.top)
             sel_code = 0
             if item.mat_max != -1:
@@ -152,11 +168,11 @@ class PageOne(tk.Frame):
                       (self.data['Доп. баллы'] <= item.dop_max)
                 sel_code = 1
             if sel_code:
-                df = self.data.loc[sel, item.cols]
-                ShowTable(df)
+                dataframe = self.data.loc[sel, item.cols]
+                ShowTable(dataframe)
 
         elif combo_value == 'Статистический отчет':
-            item = PopupWindowGet1_2()
+            item = PopupWindowGet2()
             self.master.wait_window(item.top)
             if item.atr:
                 ShowTable1(pd.DataFrame(self.data[item.atr].describe()))
@@ -176,6 +192,10 @@ class PageOne(tk.Frame):
                                       aggfunc=func))
 
     def get2(self):
+        """
+        Функция для получения вида выбранного графического отчета
+        Автор: Умбрас Е. БИВ182
+        """
         combo_value = self.combobox2.get()
         if combo_value == '':
             mb.showwarning('Warning', 'Выберите вид отчета')
@@ -189,14 +209,18 @@ class PageOne(tk.Frame):
             self.graph4()
 
     def graph1(self):
+        """
+        Функция построения столбчатой диаграммы
+        Автор: Попов Н. БИВ182
+        """
         fig = plt.figure()
         axes = fig.add_axes([0.1, 0.3, .6, .6])
         plt.title('Столбчатая диаграмма')
-        cat = self.data["Округ"].unique()
+        regions = self.data["Округ"].unique()
         grep = pd.DataFrame([])
-        for c in cat:
-            cross = pd.crosstab(self.data.loc[self.data['Округ'] == c,
-                                              'Доп. предмет'], c)
+        for reg in regions:
+            cross = pd.crosstab(self.data.loc[self.data['Округ'] == reg,
+                                              'Доп. предмет'], reg)
             grep = pd.merge(grep, cross, how='outer', left_index=True,
                             right_index=True)
         grep.T.plot(kind='bar', ax=axes)
@@ -208,6 +232,10 @@ class PageOne(tk.Frame):
             plt.show()
 
     def graph2(self):
+        """
+        Функция построения гистограммы
+        Автор: Попов Н. БИВ182
+        """
         self.data.hist('Доп. баллы', by='Доп. предмет', bins=10)
         plt.tight_layout()
         if self.save_flag:
@@ -217,6 +245,10 @@ class PageOne(tk.Frame):
             plt.show()
 
     def graph3(self):
+        """
+        Функция построения диаграммы Бокса-Вискера
+        Автор: Попов Н. БИВ182
+        """
         self.data.boxplot('Доп. баллы', by='Доп. предмет')
         plt.title('')
         plt.tight_layout()
@@ -227,6 +259,10 @@ class PageOne(tk.Frame):
             plt.show()
 
     def graph4(self):
+        """
+        Функция построения диаграммы рассеивания
+        Автор: Попов Н. БИВ182
+        """
         xmin, xmax = 0, 100
         ymin, ymax = 0, 100
         fig, ax_lst = plt.subplots(2, 3)
@@ -236,11 +272,11 @@ class PageOne(tk.Frame):
         i = 0
         for val in list(self.data['Округ'].unique()):
             print(val)
-            x = self.data.loc[self.data['Округ'] == val, 'Русский язык']
-            y = self.data.loc[self.data['Округ'] == val, 'Математика']
+            x_atr = self.data.loc[self.data['Округ'] == val, 'Русский язык']
+            y_atr = self.data.loc[self.data['Округ'] == val, 'Математика']
             ax_lst[i//3][i % 3].set_xlim(left=xmin, right=xmax)
             ax_lst[i//3][i % 3].set_ylim(bottom=ymin, top=ymax)
-            ax_lst[i//3][i % 3].scatter(x, y)
+            ax_lst[i//3][i % 3].scatter(x_atr, y_atr)
             ax_lst[i//3][i % 3].set_title(val)
             ax_lst[i//3][i % 3].set_xlabel("Русский язык")
             ax_lst[i//3][i % 3].set_ylabel("Математика")
@@ -253,6 +289,10 @@ class PageOne(tk.Frame):
             plt.show()
 
     def delete_item(self):
+        """
+        Функция для удаления элемента БД
+        Автор: Умбрас Е. БИВ182
+        """
         iid = self.table.focus()
         print(iid)
         if iid:
@@ -266,6 +306,10 @@ class PageOne(tk.Frame):
                            delete_warning)
 
     def add_item(self):
+        """
+        Функция для добавления элемента БД
+        Автор: Умбрас Е. БИВ182
+        """
         item = PopupWindowAdd()
         print(self.data)
         self.master.wait_window(item.top)
@@ -286,6 +330,10 @@ class PageOne(tk.Frame):
         print(self.data)
 
     def change_item(self):
+        """
+        Функция для изменения элемента БД
+        Автор: Умбрас Е. БИВ182
+        """
         iid = self.table.focus()
 
         if iid:
@@ -316,11 +364,19 @@ class PageOne(tk.Frame):
                            change_warning)
 
     def save_data(self):
+        """
+        Функция для сохранения БД
+        Автор: Умбрас Е. БИВ182
+        """
         if self.table.get_children():
             file_name = asksaveasfilename()
             file_name = str(file_name)
             file = open(file_name, 'wb')
-            pk.dump(self.data, file)
+            fio = self.data[['Имя', 'Фамилия', 'Математика', 'Русский язык',
+                             'Доп. предмет', 'Доп. баллы', 'Город']]
+            reg = self.data[self.data.columns[0:2]]
+            reg = reg.drop_duplicates()
+            pk.dump((fio, reg), file)
             file.close()
         else:
             mb.showwarning('Warning', save_warning)

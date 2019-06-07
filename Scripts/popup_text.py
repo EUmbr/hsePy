@@ -1,3 +1,7 @@
+"""
+Модуль для создания простого текстового отчета
+Авторы: Зайцев С., Умбрас Е. БИВ182
+"""
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
@@ -7,186 +11,205 @@ from parametres import popup_text_warning_mat, popup_text_warning_rus
 from parametres import popup_text_warning_dop
 
 
-class PopupWindowGet1_1():
+class PopupWindowGet1():
+    """
+    Класс для создания окна конфигурации текстового отчета
+    Автор: Зайцев С., Умбрас Е.
+    """
     def __init__(self):
         self.top = tk.Toplevel()
         self.top.geometry(popup_size1+'+550+200')
         self.top.resizable(0, 0)
         self.top.title('Текстовый отчет')
 
-        self.f1 = ttk.Frame(self.top)
-        self.f1.pack(expand=1, fill='both')
+        self.frame1 = ttk.Frame(self.top)
+        self.frame1.pack(expand=1, fill='both')
 
-        ttk.Label(self.f1, text='Выберите отображаемые\nстолбцы:',
+        ttk.Label(self.frame1, text='Выберите отображаемые\nстолбцы:',
                   font=popup_font1).pack(side='top', pady=8)
 
-        self.SurVar = tk.IntVar()
-        self.NameVar = tk.IntVar()
-        self.MatVar = tk.IntVar()
-        self.RusVar = tk.IntVar()
-        self.DopexVar = tk.IntVar()
-        self.DopemarkVar = tk.IntVar()
-        self.CityVar = tk.IntVar()
-        self.RegionVar = tk.IntVar()
+        self.sur_var = tk.IntVar()
+        self.name_var = tk.IntVar()
+        self.mat_var = tk.IntVar()
+        self.rus_var = tk.IntVar()
+        self.dopex_var = tk.IntVar()
+        self.dopemark_var = tk.IntVar()
+        self.city_var = tk.IntVar()
+        self.region_var = tk.IntVar()
 
-        f2 = ttk.Frame(self.f1)
-        f2.pack(side='top', fill='both')
+        frame2 = ttk.Frame(self.frame1)
+        frame2.pack(side='top', fill='both')
 
-        self.C1 = tk.Checkbutton(f2, text="Фамилия",
-                                 font=popup_font2,
-                                 variable=self.SurVar, onvalue=1, offvalue=0)
-        self.C2 = tk.Checkbutton(f2, text="Имя",
-                                 font=popup_font2,
-                                 variable=self.NameVar, onvalue=1, offvalue=0)
-        self.C3 = tk.Checkbutton(f2,
-                                 text="Математика",
-                                 font=popup_font2,
-                                 variable=self.MatVar, onvalue=1, offvalue=0)
-        self.C4 = tk.Checkbutton(f2, text="Русский язык",
-                                 font=popup_font2,
-                                 variable=self.RusVar, onvalue=1, offvalue=0)
-        self.C5 = tk.Checkbutton(f2, text="Доп. предмет",
-                                 font=popup_font2,
-                                 variable=self.DopexVar, onvalue=1, offvalue=0)
-        self.C6 = tk.Checkbutton(f2, text="Доп. баллы",
-                                 font=popup_font2,
-                                 variable=self.DopemarkVar,
-                                 onvalue=1, offvalue=0)
-        self.C7 = tk.Checkbutton(f2, text="Город",
-                                 font=popup_font2,
-                                 variable=self.CityVar, onvalue=1, offvalue=0)
-        self.C8 = tk.Checkbutton(f2, text="Округ",
-                                 font=popup_font2,
-                                 variable=self.RegionVar, onvalue=1, offvalue=0)
+        self.check1 = tk.Checkbutton(frame2, text="Фамилия",
+                                     font=popup_font2,
+                                     variable=self.sur_var, onvalue=1,
+                                     offvalue=0)
+        self.check2 = tk.Checkbutton(frame2, text="Имя",
+                                     font=popup_font2,
+                                     variable=self.name_var, onvalue=1,
+                                     offvalue=0)
+        self.check3 = tk.Checkbutton(frame2,
+                                     text="Математика",
+                                     font=popup_font2,
+                                     variable=self.mat_var, onvalue=1,
+                                     offvalue=0)
+        self.check4 = tk.Checkbutton(frame2, text="Русский язык",
+                                     font=popup_font2,
+                                     variable=self.rus_var, onvalue=1,
+                                     offvalue=0)
+        self.check5 = tk.Checkbutton(frame2, text="Доп. предмет",
+                                     font=popup_font2,
+                                     variable=self.dopex_var, onvalue=1,
+                                     offvalue=0)
+        self.check6 = tk.Checkbutton(frame2, text="Доп. баллы",
+                                     font=popup_font2,
+                                     variable=self.dopemark_var,
+                                     onvalue=1, offvalue=0)
+        self.check7 = tk.Checkbutton(frame2, text="Город",
+                                     font=popup_font2,
+                                     variable=self.city_var, onvalue=1,
+                                     offvalue=0)
+        self.check8 = tk.Checkbutton(frame2, text="Округ",
+                                     font=popup_font2,
+                                     variable=self.region_var, onvalue=1,
+                                     offvalue=0)
 
-        self.C1.grid(row=0, column=0, sticky='W', padx=20, pady=5)
-        self.C2.grid(row=1, column=0, sticky='W', padx=20, pady=5)
-        self.C3.grid(row=2, column=0, sticky='W', padx=20, pady=5)
-        self.C4.grid(row=3, column=0, sticky='W', padx=20, pady=5)
-        self.C5.grid(row=4, column=0, sticky='W', padx=20, pady=5)
-        self.C6.grid(row=5, column=0, sticky='W', padx=20, pady=5)
-        self.C7.grid(row=6, column=0, sticky='W', padx=20, pady=5)
-        self.C8.grid(row=7, column=0, sticky='W', padx=20, pady=5)
+        self.check1.grid(row=0, column=0, sticky='W', padx=20, pady=5)
+        self.check2.grid(row=1, column=0, sticky='W', padx=20, pady=5)
+        self.check3.grid(row=2, column=0, sticky='W', padx=20, pady=5)
+        self.check4.grid(row=3, column=0, sticky='W', padx=20, pady=5)
+        self.check5.grid(row=4, column=0, sticky='W', padx=20, pady=5)
+        self.check6.grid(row=5, column=0, sticky='W', padx=20, pady=5)
+        self.check7.grid(row=6, column=0, sticky='W', padx=20, pady=5)
+        self.check8.grid(row=7, column=0, sticky='W', padx=20, pady=5)
 
-        ttk.Button(self.f1, text='Далее', command=self.next).pack(pady=10)
+        ttk.Button(self.frame1, text='Далее', command=self.next).pack(pady=10)
 
     def next(self):
+        """
+        Функция для создания фрейма выбора значений атрибутов
+        Авторы: Зайцев С., Умбрас Е
+        """
         self.cols = []
-        if self.SurVar.get():
-            self.cols.append(self.C1['text'])
-        if self.NameVar.get():
-            self.cols.append(self.C2['text'])
-        if self.MatVar.get():
-            self.cols.append(self.C3['text'])
-        if self.RusVar.get():
-            self.cols.append(self.C4['text'])
-        if self.DopexVar.get():
-            self.cols.append(self.C5['text'])
-        if self.DopemarkVar.get():
-            self.cols.append(self.C6['text'])
-        if self.CityVar.get():
-            self.cols.append(self.C7['text'])
-        if self.RegionVar.get():
-            self.cols.append(self.C8['text'])
+        if self.sur_var.get():
+            self.cols.append(self.check1['text'])
+        if self.name_var.get():
+            self.cols.append(self.check2['text'])
+        if self.mat_var.get():
+            self.cols.append(self.check3['text'])
+        if self.rus_var.get():
+            self.cols.append(self.check4['text'])
+        if self.dopex_var.get():
+            self.cols.append(self.check5['text'])
+        if self.dopemark_var.get():
+            self.cols.append(self.check6['text'])
+        if self.city_var.get():
+            self.cols.append(self.check7['text'])
+        if self.region_var.get():
+            self.cols.append(self.check8['text'])
 
         if self.cols:
 
-            self.f1.pack_forget()
+            self.frame1.pack_forget()
 
-            f3 = ttk.Frame(self.top)
-            f3.pack(expand=1, fill='both')
+            frame3 = ttk.Frame(self.top)
+            frame3.pack(expand=1, fill='both')
 
-            ttk.Label(f3, text='Выберите критерии',
+            ttk.Label(frame3, text='Выберите критерии',
                       font=popup_font2).pack(side='top', pady=25)
 
-            f4 = ttk.Frame(f3)
-            f4.pack(side='top', fill='both')
+            frame4 = ttk.Frame(frame3)
+            frame4.pack(side='top', fill='both')
 
-            ttk.Label(f4, text='Математика',
+            ttk.Label(frame4, text='Математика',
                       font=popup_font2).grid(row=0, column=0,
                                              columnspan=2, pady=10,
                                              padx=10, sticky='W')
-            ttk.Label(f4, text='От',
+            ttk.Label(frame4, text='От',
                       font=popup_font2).grid(row=1, column=0,
                                              pady=10, padx=10,
                                              sticky='W')
 
-            self.w1 = ttk.Spinbox(f4, from_=20, to=100, width=5)
-            self.w1.grid(row=1, column=1)
+            self.spin1 = ttk.Spinbox(frame4, from_=20, to=100, width=5)
+            self.spin1.grid(row=1, column=1)
 
-            ttk.Label(f4, text='до',
+            ttk.Label(frame4, text='до',
                       font=popup_font2).grid(row=1, column=3, pady=10,
                                              padx=10, sticky='W')
 
-            self.w2 = ttk.Spinbox(f4, from_=20, to=100, width=5)
-            self.w2.grid(row=1, column=4)
+            self.spin2 = ttk.Spinbox(frame4, from_=20, to=100, width=5)
+            self.spin2.grid(row=1, column=4)
 
-            ttk.Label(f4, text='Русский язык',
+            ttk.Label(frame4, text='Русский язык',
                       font=popup_font2).grid(row=2, column=0,
                                              columnspan=2, pady=10,
                                              padx=10, sticky='W')
-            ttk.Label(f4, text='От',
+            ttk.Label(frame4, text='От',
                       font=popup_font2).grid(row=3, column=0,
                                              pady=10, padx=10,
                                              sticky='W')
 
-            self.w3 = ttk.Spinbox(f4, from_=20, to=100, width=5)
-            self.w3.grid(row=3, column=1)
+            self.spin3 = ttk.Spinbox(frame4, from_=20, to=100, width=5)
+            self.spin3.grid(row=3, column=1)
 
-            ttk.Label(f4, text='до',
+            ttk.Label(frame4, text='до',
                       font=popup_font2).grid(row=3, column=3,
                                              pady=10, padx=10,
                                              sticky='W')
 
-            self.w4 = ttk.Spinbox(f4, from_=20, to=100, width=5)
-            self.w4.grid(row=3, column=4)
+            self.spin4 = ttk.Spinbox(frame4, from_=20, to=100, width=5)
+            self.spin4.grid(row=3, column=4)
 
-            ttk.Label(f4, text='Доп. предмет',
+            ttk.Label(frame4, text='Доп. предмет',
                       font=popup_font2).grid(row=4, column=0,
                                              columnspan=2, pady=10,
                                              padx=10, sticky='W')
-            ttk.Label(f4, text='От',
+            ttk.Label(frame4, text='От',
                       font=popup_font2).grid(row=5, column=0,
                                              pady=10, padx=10,
                                              sticky='W')
 
-            self.w5 = ttk.Spinbox(f4, from_=20, to=100, width=5)
-            self.w5.grid(row=5, column=1)
+            self.spin5 = ttk.Spinbox(frame4, from_=20, to=100, width=5)
+            self.spin5.grid(row=5, column=1)
 
-            ttk.Label(f4, text='до',
+            ttk.Label(frame4, text='до',
                       font=popup_font2).grid(row=5, column=3,
                                              pady=10, padx=10,
                                              sticky='W')
 
-            self.w6 = ttk.Spinbox(f4, from_=20, to=100, width=5)
-            self.w6.grid(row=5, column=4)
+            self.spin6 = ttk.Spinbox(frame4, from_=20, to=100, width=5)
+            self.spin6.grid(row=5, column=4)
 
-            ttk.Button(f3, text='Создать', command=self.done).pack(pady=35)
+            ttk.Button(frame3, text='Создать', command=self.done).pack(pady=35)
         else:
             mb.showwarning('Warning', popup_text_warning1, parent=self.top)
 
     def done(self):
+        """
+        Функция получения значений полей выбора
+        Автор: Зайцев С., Умбрас Е.
+        """
         self.mat_max = self.rus_max = self.dop_max = -1
         self.mat_min = self.rus_min = self.dop_min = -1
         err_code = 0
-        if (any(not(char.isdigit()) for char in self.w1.get()))or\
-           (any(not(char.isdigit()) for char in self.w2.get()))or\
-           (any(not(char.isdigit()) for char in self.w3.get()))or\
-           (any(not(char.isdigit()) for char in self.w4.get()))or\
-           (any(not(char.isdigit()) for char in self.w5.get()))or\
-           (any(not(char.isdigit()) for char in self.w6.get())):
+        if (any(not(char.isdigit()) for char in self.spin1.get()))or\
+           (any(not(char.isdigit()) for char in self.spin2.get()))or\
+           (any(not(char.isdigit()) for char in self.spin3.get()))or\
+           (any(not(char.isdigit()) for char in self.spin4.get()))or\
+           (any(not(char.isdigit()) for char in self.spin5.get()))or\
+           (any(not(char.isdigit()) for char in self.spin6.get())):
             mb.showwarning('Warning', popup_text_warning2,
                            parent=self.top)
 
         else:
-            if (self.w1.get())and(self.w2.get())and\
-               (int(self.w1.get()) <= int(self.w2.get()))and\
-               (int(self.w2.get()) <= 100):
-                self.mat_min = int(self.w1.get())
-                self.mat_max = int(self.w2.get())
+            if (self.spin1.get())and(self.spin2.get())and\
+               (int(self.spin1.get()) <= int(self.spin2.get()))and\
+               (int(self.spin2.get()) <= 100):
+                self.mat_min = int(self.spin1.get())
+                self.mat_max = int(self.spin2.get())
                 print(type(self.mat_max))
                 print(self.mat_min, self.mat_max)
-            elif not (self.w1.get() or self.w2.get()):
+            elif not (self.spin1.get() or self.spin2.get()):
                 self.mat_min = 0
                 self.mat_max = 100
             else:
@@ -197,12 +220,12 @@ class PopupWindowGet1_1():
                 self.mat_max = -1
                 err_code = 1
 
-            if (self.w3.get())and(self.w4.get())and\
-               (int(self.w3.get()) <= int(self.w4.get())):
-                self.rus_min = int(self.w3.get())
-                self.rus_max = int(self.w4.get())
+            if (self.spin3.get())and(self.spin4.get())and\
+               (int(self.spin3.get()) <= int(self.spin4.get())):
+                self.rus_min = int(self.spin3.get())
+                self.rus_max = int(self.spin4.get())
                 print(self.rus_min, self.rus_max)
-            elif not (self.w3.get() or self.w4.get()):
+            elif not (self.spin3.get() or self.spin4.get()):
                 self.rus_min = 0
                 self.rus_max = 100
             else:
@@ -213,12 +236,12 @@ class PopupWindowGet1_1():
                 self.rus_max = -1
                 err_code = 1
 
-            if (self.w5.get())and(self.w6.get())and\
-               (int(self.w5.get()) <= int(self.w6.get())):
-                self.dop_min = int(self.w5.get())
-                self.dop_max = int(self.w6.get())
+            if (self.spin5.get())and(self.spin6.get())and\
+               (int(self.spin5.get()) <= int(self.spin6.get())):
+                self.dop_min = int(self.spin5.get())
+                self.dop_max = int(self.spin6.get())
                 print(self.dop_min, self.dop_max)
-            elif not (self.w5.get() or self.w6.get()):
+            elif not (self.spin5.get() or self.spin6.get()):
                 self.dop_min = 0
                 self.dop_max = 100
             else:

@@ -1,3 +1,7 @@
+"""
+Модуль для создания стартовой страницы
+Авторы: Умбрас Е., Попов Н. БИВ182
+"""
 import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
@@ -7,7 +11,9 @@ from parametres import title_font
 
 
 class StartPage(tk.Frame):
-
+    """
+    Класс для создания и настройки стартовой страницы
+    """
     def __init__(self, parent, controller):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
@@ -27,6 +33,10 @@ class StartPage(tk.Frame):
         btn2.place(x=337, y=400, width=300, height=50)
 
     def show_base(self):
+        """
+        Функция кнопки для вывода базы данных на экран
+        Авторы: Умбрас. Е, Попов Н. БИВ182
+        """
         path = askopenfilename()
         path = str(path)
         if path != "":
@@ -38,4 +48,8 @@ class StartPage(tk.Frame):
         self.controller.show_frame('PageOne', data=data)
 
     def end_progam(self):
+        """
+        Функция кнопки для завершения программы
+        Автор: Умбрас Е. БИВ182
+        """
         self.quit()

@@ -1,3 +1,7 @@
+"""
+Модуль для создания окна изменения элемента
+Автор: Умбрас Е.
+"""
 import tkinter as tk
 from tkinter import ttk
 import tkinter.messagebox as mb
@@ -5,6 +9,10 @@ from parametres import popup_size1, popup_font1, popup_font2, warning
 
 
 class PopupWindowChange():
+    """
+    Класс создания окна Toplevel для добавления элемента
+    Автор: Умбрас Е.
+    """
     def __init__(self, values):
         self.values = values
         self.top = tk.Toplevel()
@@ -83,6 +91,10 @@ class PopupWindowChange():
         butt['command'] = self.done
 
     def done(self):
+        """
+        Функция получения значений Entry
+        Автор: Умбрас Е.
+        """
         self.surname = self.surname_entry.get()
         if not self.surname.isalpha():
             mb.showwarning('Warning', warning,

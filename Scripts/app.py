@@ -1,3 +1,7 @@
+"""
+Модуль содержит класс для создания окна приложения
+Автор: Умбрас Е.Д. БИВ182
+"""
 import tkinter as tk
 from tkinter import ttk
 from start_page import StartPage
@@ -6,7 +10,10 @@ from page_one import PageOne
 
 
 class SampleApp(tk.Tk):
-
+    """
+    Класс, который создает главное окно
+    Автор: Умбрас Е.Д. БИВ182
+    """
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -44,7 +51,10 @@ class SampleApp(tk.Tk):
         self.show_frame("StartPage")
 
     def show_frame(self, page_name, data=None):
-        '''Show a frame for the given page name'''
+        """
+        Показывает фрейм с заданным именем page_name
+        Автор: Умбрас Е.Д. БИВ182
+        """
         if data is None:
             for i in self.frames['PageOne'].table.get_children():
                 self.frames['PageOne'].table.delete(i)

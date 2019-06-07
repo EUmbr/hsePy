@@ -1,17 +1,21 @@
+"""
+Главная программа для запуска приложения
+Автор: Умбрас Е.Д. БИВ182
+"""
 import sys
 import os
 
-workDir = "D:\\Work\\"
+WORK_DIR = "D:\\Work\\"
 try:
-    sys.path.insert(0, workDir+"Library")
+    sys.path.insert(0, WORK_DIR+"Library")
     from app import SampleApp
 except:
-    workDir = "..\\"
-    sys.path.insert(0, workDir+"Library")
+    WORK_DIR = "..\\"
+    sys.path.insert(0, WORK_DIR+"Library")
     from app import SampleApp
 
-os.chdir(workDir)
+os.chdir(WORK_DIR)
 
 if __name__ == "__main__":
-    app = SampleApp()
-    app.mainloop()
+    APP = SampleApp()
+    APP.mainloop()

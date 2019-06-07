@@ -1,20 +1,40 @@
+"""
+Модуль со универсальными функциями и классами
+Автор: Умбрас Е.Д. БИВ182
+"""
 import pickle as pk
 import tkinter as tk
 from tkinter import ttk
-from parametres import path_text
 from tkinter import messagebox as mb
+from parametres import path_text
 from parametres import get_file_warning
 
 
 def load_data(path):
+    """
+    Функция для загрузки БД из pickle-файла
+    Принимает:      path - путь к файлу
+    Возващает:      data - первый справочник
+                    reg - второй справочник
+    Автор: Ушаков В. БИВ182
+    """
     filename = open(path, 'rb')
     data, reg = pk.load(filename)
+    print(data)
+    print(reg)
     filename.close()
     return data, reg
 
 
 class PopupFileName():
+    """
+    Класс, который создает окно ввода имени файла
+    Автор: Умбрас Е.Д. БИВ182
+    """
     def __init__(self):
+        """
+        Функция инициализации, создает новое окно Toplevel
+        """
         self.top = tk.Toplevel()
         self.top.geometry('+550+200')
         self.top.resizable(0, 0)
@@ -25,6 +45,10 @@ class PopupFileName():
         btn.pack(pady=10)
 
     def done(self):
+        """
+        Функция нажатия на кнопку, получает имя файла из Entry
+        Автор: Умбрас Е.Д. БИВ182
+        """
         filename = self.entry.get()
         if filename.isalnum():
             self.filename = filename
@@ -35,6 +59,10 @@ class PopupFileName():
 
 
 class ShowTable():
+    """
+    Класс для вывода датафрейма в виде таблицы без индексов
+    Автор: Умбрас Е.Д. БИВ182
+    """
     def __init__(self, data):
         self.top = tk.Toplevel()
         self.top.geometry('+550+200')
@@ -56,17 +84,21 @@ class ShowTable():
         self.table.pack(fill=tk.BOTH)
 
         for i in range(len(self.data)):
-            d = dict(self.data.iloc[i])
-            t = []
+            row = dict(self.data.iloc[i])
+            val = []
             for column in self.cols:
-                t.append(d[column])
-            self.table.insert('', 'end', values=t)
+                val.append(row[column])
+            self.table.insert('', 'end', values=val)
 
         ttk.Button(self.top, text='Сохранить', command=self.save).pack(pady=5)
         ttk.Button(self.top, text='Выйти',
                    command=self.top.destroy).pack(pady=5)
 
     def save(self):
+        """
+        Функция сохранения таблицы в .xlsx файл
+        Автор: Умбрас Е.Д. БИВ182
+        """
         item = PopupFileName()
         self.top.wait_window(item.top)
         path = path_text+item.filename+'.xlsx'
@@ -75,6 +107,10 @@ class ShowTable():
 
 
 class ShowTable1():
+    """
+    Класс для вывода датафрейма в виде таблицы с индексами
+    Автор: Умбрас Е.Д. БИВ182
+    """
     def __init__(self, data):
         self.top = tk.Toplevel()
         self.top.geometry('+250+200')
@@ -98,17 +134,21 @@ class ShowTable1():
         self.table.pack(fill=tk.BOTH)
 
         for i in range(len(self.data)):
-            d = dict(self.data.iloc[i])
-            t = [self.data.index[i]]
+            row = dict(self.data.iloc[i])
+            val = [self.data.index[i]]
             for column in self.cols:
-                t.append(d[column])
-            self.table.insert('', 'end', values=t)
+                val.append(row[column])
+            self.table.insert('', 'end', values=val)
 
         ttk.Button(self.top, text='Сохранить', command=self.save).pack(pady=5)
         ttk.Button(self.top, text='Выйти',
                    command=self.top.destroy).pack(pady=5)
 
     def save(self):
+        """
+        Функция сохранения таблицы в .xlsx файл
+        Автор: Умбрас Е.Д. БИВ182
+        """
         item = PopupFileName()
         self.top.wait_window(item.top)
         path = path_text+item.filename+'.xlsx'
