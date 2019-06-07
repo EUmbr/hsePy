@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 import pandas as pd
-from load import load_data
+from library import load_data
 from parametres import title_font
 
 

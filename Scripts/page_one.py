@@ -6,8 +6,8 @@ import pickle as pk
 import pandas as pd
 import matplotlib.pyplot as plt
 from popup_text import PopupWindowGet1_1
-from show_table1 import ShowTable
-from show_table2 import ShowTable1
+from library import ShowTable
+from library import ShowTable1
 from popup_text2 import PopupWindowGet1_2
 from popup_add import PopupWindowAdd
 from popup_change import PopupWindowChange
@@ -22,7 +22,6 @@ plt.rcParams["figure.figsize"] = fig_size
 
 
 class PageOne(tk.Frame):
-
     def __init__(self, parent, controller, data=None):
         ttk.Frame.__init__(self, parent)
         self.controller = controller

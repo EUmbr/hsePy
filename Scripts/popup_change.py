@@ -22,36 +22,36 @@ class PopupWindowChange():
         frame2.pack(side='top', fill='both')
         ttk.Label(frame2, text='Фамилия',
                   font=popup_font2).grid(row=0, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Имя',
                   font=popup_font2).grid(row=1, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Математика',
                   font=popup_font2).grid(row=2, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Русский язык',
                   font=popup_font2).grid(row=3, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Доп. предмет',
                   font=popup_font2).grid(row=4, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Доп. баллы',
                   font=popup_font2).grid(row=5, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Город',
                   font=popup_font2).grid(row=6, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
         ttk.Label(frame2, text='Округ',
                   font=popup_font2).grid(row=7, column=0,
-                                               pady=10, padx=10,
-                                               sticky='W')
+                                         pady=10, padx=10,
+                                         sticky='W')
 
         self.surname_entry = ttk.Entry(frame2, width=27)
         self.surname_entry.insert('end', self.values[0])
