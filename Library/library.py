@@ -20,8 +20,6 @@ def load_data(path):
     """
     filename = open(path, 'rb')
     data, reg = pk.load(filename)
-    print(data)
-    print(reg)
     filename.close()
     return data, reg
 
@@ -103,7 +101,7 @@ class ShowTable():
         self.top.wait_window(item.top)
         path = path_text+item.filename+'.xlsx'
 
-        self.data.to_excel(path, index=True)
+        self.data.to_excel(path, index=False)
 
 
 class ShowTable1():

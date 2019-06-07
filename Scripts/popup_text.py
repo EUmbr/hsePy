@@ -207,8 +207,6 @@ class PopupWindowGet1():
                (int(self.spin2.get()) <= 100):
                 self.mat_min = int(self.spin1.get())
                 self.mat_max = int(self.spin2.get())
-                print(type(self.mat_max))
-                print(self.mat_min, self.mat_max)
             elif not (self.spin1.get() or self.spin2.get()):
                 self.mat_min = 0
                 self.mat_max = 100
@@ -224,7 +222,6 @@ class PopupWindowGet1():
                (int(self.spin3.get()) <= int(self.spin4.get())):
                 self.rus_min = int(self.spin3.get())
                 self.rus_max = int(self.spin4.get())
-                print(self.rus_min, self.rus_max)
             elif not (self.spin3.get() or self.spin4.get()):
                 self.rus_min = 0
                 self.rus_max = 100
@@ -240,7 +237,6 @@ class PopupWindowGet1():
                (int(self.spin5.get()) <= int(self.spin6.get())):
                 self.dop_min = int(self.spin5.get())
                 self.dop_max = int(self.spin6.get())
-                print(self.dop_min, self.dop_max)
             elif not (self.spin5.get() or self.spin6.get()):
                 self.dop_min = 0
                 self.dop_max = 100

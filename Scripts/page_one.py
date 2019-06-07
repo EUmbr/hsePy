@@ -271,7 +271,6 @@ class PageOne(tk.Frame):
                      ' по русскому языку по городам')
         i = 0
         for val in list(self.data['Округ'].unique()):
-            print(val)
             x_atr = self.data.loc[self.data['Округ'] == val, 'Русский язык']
             y_atr = self.data.loc[self.data['Округ'] == val, 'Математика']
             ax_lst[i//3][i % 3].set_xlim(left=xmin, right=xmax)
@@ -294,13 +293,11 @@ class PageOne(tk.Frame):
         Автор: Умбрас Е. БИВ182
         """
         iid = self.table.focus()
-        print(iid)
         if iid:
             pos = self.table.index(iid)
             self.table.delete(iid)
             self.data = self.data.drop([pos])
             self.data.index = range(len(self.data))
-            print(self.data)
         else:
             mb.showwarning("Warning",
                            delete_warning)
@@ -311,7 +308,6 @@ class PageOne(tk.Frame):
         Автор: Умбрас Е. БИВ182
         """
         item = PopupWindowAdd()
-        print(self.data)
         self.master.wait_window(item.top)
         self.table.insert('', 'end', values=(item.surname, item.name,
                                              int(item.mat), int(item.rus),
@@ -327,7 +323,6 @@ class PageOne(tk.Frame):
                                       'Город': item.city,
                                       'Округ': item.region},
                                      ignore_index=True)
-        print(self.data)
 
     def change_item(self):
         """
@@ -341,7 +336,6 @@ class PageOne(tk.Frame):
             item = PopupWindowChange(val['values'])
             self.master.wait_window(item.top)
             pos = self.table.index(iid)
-            print(pos)
 
             self.data.loc[pos, 'Фамилия'] = item.surname
             self.data.loc[pos, 'Имя'] = item.name
@@ -352,7 +346,6 @@ class PageOne(tk.Frame):
             self.data.loc[pos, 'Город'] = item.city
             self.data.loc[pos, 'Округ'] = item.region
 
-            print(self.data.iloc[pos])
 
             self.table.insert('', pos, values=(item.surname, item.name,
                                                int(item.mat), int(item.rus),

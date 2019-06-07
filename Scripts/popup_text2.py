@@ -63,7 +63,7 @@ class PopupWindowGet2():
         if self.var.get() == 0:
             self.atr = 'Математика'
         elif self.var.get() == 1:
-            self.atr = 'Русский'
+            self.atr = 'Русский язык'
         elif self.var.get() == 2:
             self.atr = 'Доп. предмет'
         elif self.var.get() == 3:
